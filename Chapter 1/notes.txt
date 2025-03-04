@@ -1,0 +1,10 @@
+Implementation = compiler + supported C library + linker + software to run the program
+
+The compiler converts my source code to an intermediate code, and the linker combines this with other code to produce the executable file. C uses this tow-part approach to facilitate the modularization of programs. I can compile individual modules separately and then use the linker to combine the compiled modules later. That way, if I have to change one module, I don't have to recompile the other ones. Also, the linker combines my program with precompiled library code.
+Usually, the source code is converted to machine language code and placed in an object code file. This code is not yet ready to run. It lacks startup code, which is code that acts as an interface between my program and the operating system. It also lacks the code for library routines (functions).
+The linker brings together these three elements and puts them together into a single file, the executable file. For library code, the linker extracts only the code needed for the functions I use from the library.
+
+The GNU Project, dating from 1987, is a mass collaboration that has developed a large body of free Unix-like software.
+One of its products is the GNU Compiler Collection, or GCC.
+
+The LLVM Project is an open-source collection of compiler-related software dating from a 2000 research project at the university of Illinois. Its Clang compiler processes C code 
