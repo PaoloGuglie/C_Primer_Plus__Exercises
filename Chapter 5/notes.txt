@@ -31,3 +31,17 @@ When I call printf(), the fact that it displays information is a side effect: th
 A "sequence point" is a point in program execution at which all side effects are evaluatd before going on to the next step. In C, the semicolon in a statement marks a sequence point. All changes take place befor ea program procedes to the next statement. The end of an expression is a sequence point.
 
 A "compound statement" is two or more statements grouped together by enclosing them in braces. It is also called a BLOCK.
+
+When appearing in an expression, char and short, both signed and unsigned, are automatically converted to int or, if necessary, unsigned int.
+
+In any operation involving two types, both value are converted to the higher ranking of the two types.
+
+When passed as function arguments, char and short are converted to int, and float is converted to double. This automatic promotion is overridden by function prototyping.
+
+Demotions, in which values are converted to lower-ranking types, can cause problems.
+
+A "cast" consists of preceding the quantity with the name of the desired type in parentheses. The parentheses and type name together constitute a "cast operator":
+        (int) 1.6
+
+Arithmetic operations require operands to be of the same type, so C makes automatic conversions.
+
