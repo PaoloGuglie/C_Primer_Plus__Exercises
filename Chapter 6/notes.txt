@@ -1,0 +1,20 @@
+C has three loop structures: "while", "for" and "do while".
+
+A good language should provide three forms of program flow:
+  - Executing a sequence of statements.
+  - Repeating a sequence of statements until some condition is met (looping).
+  - Using a test to decide between alternative sequences (branching).
+
+All nonzero values are regarded as true, and only 0 is recognized as false.
+
+In a for loop, in the specification, I can leave one or more expressoins black, but always using the semicolons:
+  for (n = 3; ans <= 25; )
+An empty middle control expression is considered to be true, so the loop:
+  for ( ; ; )
+goes on forever.
+The first expression need not initialize a variable. It could, for example, be a printf() statement.
+
+The comma operator extends the felxibility of the for loop by enabling me to include more than one initialization or update expression in a single for loop specification.
+But always one test expression.
+  for (a = 1, b = 2; a <= 5; a++, b += 3)
+
