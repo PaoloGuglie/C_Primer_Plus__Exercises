@@ -1,0 +1,7 @@
+The getchar() function takes no arguments, and it returns the next character from input.
+The putchar() function prints its argument.
+These functions work with characters only.
+
+C has a standard set of functions for analyzing characters. The ctype.h header file contains the prototypes. These functions take a character as an arguement and return nonzero (true) if the character belongs to a particular category and zero (false) otherwise.
+
+An "else" goes with the most recent "if" unless braces indicate otherwise. Remember that the compiler ignores indentation.
