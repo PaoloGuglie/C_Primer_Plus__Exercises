@@ -2,6 +2,40 @@ The getchar() function takes no arguments, and it returns the next character fro
 The putchar() function prints its argument.
 These functions work with characters only.
 
-C has a standard set of functions for analyzing characters. The ctype.h header file contains the prototypes. These functions take a character as an arguement and return nonzero (true) if the character belongs to a particular category and zero (false) otherwise.
+C has a standard set of functions for analyzing characters. The "ctype.h" header file contains the prototypes. These functions take a character as an arguement and return nonzero (true) if the character belongs to a particular category and zero (false) otherwise.
 
 An "else" goes with the most recent "if" unless braces indicate otherwise. Remember that the compiler ignores indentation.
+
+If I use the "iso646.h" header file, I can use "and" instead of &&, "or" instead of || and "not" instead of ! .
+
+Aside from those cases in which tow operators share an operand, C ordinarily does not guarantee which parts of a complex expression are evaluated first.
+The ambiguity was left in the language so that compiler designers could make the most efficient choice for a particular system. One exception are logical operators: C guarantees that logical expressions are evaluated from left to right. && and || are sequence points, so all side effects take place before a program moves from one operand to the next. So, as soon as an element is found that invalidates the expression as a whole, the evaluation stops.
+
+I cannot do:
+    if (90 <= range <= 100)
+I have to do:
+    if (range >= 90 && range <= 100)
+
+C offers a shorthand way to express one form of the "if else" statement: it is called a CONDITIONAL EXPRESSION and uses the ?: conditional operator.
+This:
+    x = (y < 0) ? -y : y;
+is equal to:
+    if (y < 0):
+    {
+      x = -y;
+    }
+    else
+    {
+      x = y;
+    }
+
+Operators with one operand are called "unary" operators.
+Operators with tow operands are called "binary" operators.
+Operators with three operands are called "ternary" operators.
+
+The "continue" statement can be used in the three loop forms. When encountered, it causes the rest of an iteration to be skipped and the next iteration to be started. It can also be used as a placeholder.
+Often, reversing an "if" test eliminates the need for a "continue".
+
+A "break" statement in a loop causes the program to break free of the loop that encloses it and to proceed to the next stage of the program. If the break statement is inside nested loops, it affects only the innermost loop containing it.
+
+The C "switch" statement is useful when a program needs to choose between several alternatives.
