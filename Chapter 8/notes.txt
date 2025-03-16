@@ -1,0 +1,7 @@
+getchar() and putchar() perfomr input and output one character at a time. This method does suit the capability of a computer. This approach is the heart of most programs that deal with text.
+
+The immediate echoing of input characters is an instance of "unbuffered (or direct) input", meaning that the characters that I type are immediately made available to the waiting program. The delayed echoing, on the other hand, illustrates "buffered input", in which the characters I type are collected and stored in an area of temporary storage called a "buffer". Pressing enter "flushes" the buffer, making the characters available.
+Buffered input is useful when correcting errors in text input.
+Unbuffered input is useful in games.
+
+Buffering comes in tow varieties: "fully buffered I/O" and "line-buffered I/O". For the fully buffered input, the buffer is flushed when it is full. With line-buffered I/O, the buffer is flushed whenever a newline character shows up. Keyboard input is normally line buffered, so that pressing Enter flushes the buffer.
