@@ -5,3 +5,15 @@ Buffered input is useful when correcting errors in text input.
 Unbuffered input is useful in games.
 
 Buffering comes in tow varieties: "fully buffered I/O" and "line-buffered I/O". For the fully buffered input, the buffer is flushed when it is full. With line-buffered I/O, the buffer is flushed whenever a newline character shows up. Keyboard input is normally line buffered, so that pressing Enter flushes the buffer.
+
+"low-lever I/O" means dealing with files by using the basic file tools of the host operating system. It is impossible to create a standart library of universal low-level I/O functions.
+"standard I/O package" means creating a standard model and a standard set of I/O functions for dealing with files. At this level, differences betwen systems are handled by specific C implementations with an uniform interface.
+Differens systems store files differently.
+
+Conceptually, the C program deals with a stream instead of directly with a file. A "stream" is an idealized flow of data to which the actual input or output is mapped. That means various kinds of input with differing properties are represented by streams with more uniform properties. The process of opening a file then becomes one of associating a stream with the file, and reading and writing take palce vie the stream.
+C treats input and output devices the same as it treats regular files on storage devices. The keyboard and the display device are treated as files opened automatically be every C program. Keyboard input is represented by a stream called "stdin", and output to the screen is represented by a stream called "stdout". The getchar(), putchar(), printf() and scanf() functions are all members of the standard I/O package and they deal with these two streams.
+
+Usually, End OF File (EOF) is communicated to the operating systems by files by placing a special character at the end of the file, usually Ctrl+Z . I can use it also with my stdin as a character to tell that I reached the end of the input.
+C handles EOF by having the getchar() function return a special value when the end of a file is reached, regardless of how the operating system actually ddetects the EOF. The name given to this value is EOF. Therefore, the return value for getchar() when it detects an end of file is EOF. Also scanf() returns EOF. Typically, EOF is defined in the stdio.h header file as:
+    #define EOF (-1)
+This is because -1 does not correspond to any character, so it can be used to signal the end of a file.
