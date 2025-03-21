@@ -15,5 +15,28 @@ C treats input and output devices the same as it treats regular files on storage
 
 Usually, End OF File (EOF) is communicated to the operating systems by files by placing a special character at the end of the file, usually Ctrl+Z . I can use it also with my stdin as a character to tell that I reached the end of the input.
 C handles EOF by having the getchar() function return a special value when the end of a file is reached, regardless of how the operating system actually ddetects the EOF. The name given to this value is EOF. Therefore, the return value for getchar() when it detects an end of file is EOF. Also scanf() returns EOF. Typically, EOF is defined in the stdio.h header file as:
-    #define EOF (-1)
+        #define EOF (-1)
 This is because -1 does not correspond to any character, so it can be used to signal the end of a file.
+
+By default, a C program using the standard I/O package looks to the standard input as its source for input. This is the stream identified as "stdin". It is whatever has been set up as the usual way for reading data into the computer. I can tell a program to seek its input from a file instead of from a keyboard.
+There are two ways to get a program to work with files. One way is to use functions that open, close, read, write files. The second is to use a program designed to work with a keyboard and screen, but to redirect input and output along different channels. I can reassign the stdin to a file. Redirection is associated with the operating system, not C. Many C enviroments, including Unix, Linux and Windows Command Prompt mode feature redirection and some C implementations simulate in on systems lacking the feature.
+
+Redirecting input:
+        echo.exe < words
+if words is a text file. This command causes the "words" file to be associated with the "stdin" stream.
+
+Redirecting output:
+        echo.exe > mywords
+this causes a new file called "mywords" to be created for my use and then it redirects the output of echo.exe to that file. The redirection reassigns "stdout" from the display device (my screen) to the "mywords.txt" file instead. (if I already have a file with that name, it would be erased and then replaced by the new one) (many operating systems give me the option of protecting existing files by making them read-only)
+
+Both:
+        echo.exe < mywords > savewords
+to make a copy of the "mywords" file and call it "savewords".
+I can also do:
+        echo.exe > savewords < mywords
+
+A "redirection operator" connects an executable program (including standard operating system commands) with a data file. It cannot be used to connect one data file to another, nor can it be used to connect one program to another.
+Input cannot be taken from more that one file, nor can output be directed to more than one file by using these operators.
+Normally, spaces between the names and operators are optional.
+
+Unix, Linux and Windows/DOS also feature the >> operator, which enables me to add data to the end of an existing file, and the pipe operator (|), which enables me to connect the output of one program to the input of a second program.
