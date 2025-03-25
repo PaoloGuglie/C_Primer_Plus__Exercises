@@ -17,11 +17,11 @@ int main()
   // Open the file for reading
   fp = fopen(fname, "r");
 
-  // If attempt failed
+  // If attempt fails
   if (fp == NULL)
   {
     printf("Failed to open file. Bye!\n");
-    exit(1);  // quit program
+    exit(1);  // quit the program
   }
 
   // getc(fp) gets a character from the open file
