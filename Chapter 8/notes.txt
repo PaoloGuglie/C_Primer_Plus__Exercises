@@ -58,3 +58,9 @@ getchar() reads every character, including spaces, tabs and newlines. scanf() sk
 This code:
         scanf("%ld", &n) == 1
 is true only if the user inputs an integer.
+
+Although the input stream consists of characters, the scanf() function can convert then to a numeric value if I tell it to.
+
+The "switch" statement is a natural vehicle for choosing actions.
+
+Mixing character input with numeric input can cause problems.
