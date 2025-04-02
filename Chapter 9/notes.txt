@@ -1,0 +1,26 @@
+ANSI C prototyping:
+    void func(void);
+
+A prototype specifies both the type of value a function returns and the types of arguments it expects. This information is called the "signature" of the function.
+
+A function prototype can go inside main().
+
+How to call a type void function:
+    func();
+
+In a function definition, a lack of semicolon tells the compiler that I am defining a function instead of calling or prototyping it.
+
+I can omit variable names in the prototype:
+int func(char, int);
+
+Formal arguments (also called "formal parameters") are local variables private to a function. They will be assigned values each time the function is called.
+They become "actual parameters": specific values assigned to the formal parameters.
+Because the called function works with data copied from the calling function, the original data in the calling function is protected from whatever manipulations the called function applies to the copies.
+
+We call a "driver" a program designed to test functions.
+
+The actual return value is what I would get if I assigned the indicated return value to a variable of the declared return type. This prevents from returning a type different from the declared type.
+
+A statement like:
+    return;
+causes the function to terminate and return control to the calling function. Because no expression follows return, no value is returned. This form should be used only in a type void function.
