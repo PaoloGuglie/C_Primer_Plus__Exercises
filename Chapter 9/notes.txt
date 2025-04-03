@@ -24,3 +24,28 @@ The actual return value is what I would get if I assigned the indicated return v
 A statement like:
     return;
 causes the function to terminate and return control to the calling function. Because no expression follows return, no value is returned. This form should be used only in a type void function.
+
+In the ANSI C standard library, functions are grouped into families, each having its own header file. Header files contain, among other things, the declarations for the functions in that family.
+
+What happens without correct function prototypes?
+The calling function places its arguments in a temporary storage area called the "stack", and the called function reads those arguments off the stack. These two processes are not coordinated with one another.
+The calling function decides which type to pass based on the actual arguments in the call, and the called function reads values based on the types of its formal arguments.
+If the types, number of arguments... differ, the called function reads whatever value happens to be sitting in the stack at the time. Maybe it's not occupied by correct information but by random bytes. Maybe the bytes will be interpreted in an incorrect way... (type int and type double are stored with a different number of bytes, therefore if I try to read an int from a double it truncates the double).
+
+In a function prototype, the variable names, if present, are dummy names and don't have to match the names use in the function definition.
+
+Using function prototypes, if there is a mismatch with the function call and if both types are numbers, the compiler converts the values of the actual arguments to the same type as the formal arguments.
+
+If I give a prototype like this:
+        void print_name();
+an ANSI C compiler will assume that I have decided to forego function prototyping and it will not check arguments. To indicate that a function really has no arguments, do:
+        void print_name(void);
+
+With functions that take a variable number of arguments, ANSI C allows for partial prototyping. For example, printf:
+        int printf(const char *, ...);
+This prototype says that the first arguments is a string and that there may be further arguments of an unspecified nature.
+
+The C library, through the "stdarg.h" header file, provides a standard way for defining a function with a variable number of parameters.
+
+C permits a function to call itself. This process is called "recursion".
+Recursive solutions tend to be more elegant and less efficient than loop solutions.
