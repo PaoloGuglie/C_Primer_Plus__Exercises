@@ -38,6 +38,7 @@ int main(void)
   return 0;
 }
 
+// Function definition
 void show_n_char(char ch, int num)
 {
   for (int count = 1; count <= num; count++)

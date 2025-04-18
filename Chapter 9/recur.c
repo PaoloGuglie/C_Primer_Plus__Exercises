@@ -9,8 +9,8 @@ int main(void)
   return 0;
 }
 
+/* The %p specifier is used for addresses */
 void up_and_down(int n)
-/* %p specifier is used for addresses */
 {
   printf("Level %d: n location %p\n", n, &n);  // 1
 
