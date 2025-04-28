@@ -51,3 +51,16 @@ The C library, through the "stdarg.h" header file, provides a standard way for d
 
 C permits a function to call itself. This process is called "recursion".
 Recursive solutions tend to be more elegant and less efficient than loop solutions.
+
+Each level of recursion (function call) has its own private variables.
+Statements in a recursive function that come before the recursive call are executed in the same order that the functions are called.
+Statements in a recursive functoin that come after the recursive call are executed in the opposite order from which the functions are called. This feature of recursion is useful for programming problems involving reversals of order.
+The code itself is not duplicated: a recursive call returns the program to the beginning of the function's instruction set. Similar to a loop.
+
+A loop does not create new variables at each iteration, while the recursion does.
+
+In the simplest form of recursion, the recursive call is at the end of the function, just before the return statement. This is called "tail recursion", or "end recursion". Acts like a loop.
+
+Normally, a loop is a better choice:
+First, because each recursive call gets its own set of variables, recursion uses more memory. Each recursive call places a new set or variables on the stack. Space restrictions in the stack can limit the number of recursive calls.
+Second, recursion is slower because each function call takes time.

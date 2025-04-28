@@ -11,6 +11,7 @@ int main(void)
 
 /* The %p specifier is used for addresses */
 void up_and_down(int n)
+// In this example, there are four levels of recursion.
 {
   printf("Level %d: n location %p\n", n, &n);  // 1
 
