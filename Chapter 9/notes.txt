@@ -64,3 +64,42 @@ In the simplest form of recursion, the recursive call is at the end of the funct
 Normally, a loop is a better choice:
 First, because each recursive call gets its own set of variables, recursion uses more memory. Each recursive call places a new set or variables on the stack. Space restrictions in the stack can limit the number of recursive calls.
 Second, recursion is slower because each function call takes time.
+
+RECURSION PROS AND CONS:
+    - it offers the simplest solution to some programming problems.
+    - some recursive algorithms can rapidly exhause a computer's memory resources.
+    - it can be difficult to document and maintain.
+
+Fibonacci with double recursion:
+    unsigned long Fibonacci(unsigned n)
+    {
+        if (n > 2)
+        {
+            return Fibonacci(n - 1) + Fibonacci(n - 2);
+        }
+
+        else
+        {
+            return 1;
+        }
+    }
+The number of variables used by this functions grows exponentially as n increases.
+
+To compile programs with two or more source code files:
+    gcc file1.c file2.c
+In addition, two object files called "file1.o" and "file2.o" are produced. If I later change file1.c but not file2.c, I can compile the first and combine it with the object code version of the second:
+    gcc file1.c file2.o
+
+I can also use #include "filename.c" in the main file to avoid compiling multiple files.
+
+If I put main() in one fiel and my function definitions in a asecond file, the first file still needs the function prototypes. I can store them in an header file. That's what the standard C library does.
+
+Constants defined with #define hold only for the file containing the #define directive. I can place them in an header file with the function prototypes to avoid changing them multiple times if revised.
+
+To skip to the next whitespace, I can use scanf("%*s") .
+
+A "pointer" is a variable used to store an address.
+
+Any C function that modifies a value in the calling function without using a return value uses addresses.
+
+The unary "&" operator gives my the address where a variable is stored.
