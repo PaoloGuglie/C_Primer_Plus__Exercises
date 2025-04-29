@@ -103,3 +103,28 @@ A "pointer" is a variable used to store an address.
 Any C function that modifies a value in the calling function without using a return value uses addresses.
 
 The unary "&" operator gives my the address where a variable is stored.
+
+To swap variables values:
+    temp = x;
+    x = y;
+    y = temp;
+
+With "return", I can send just one value back to the calling function.
+
+I can do:
+    ptr = &pooh;  // assings pooh's address to ptr
+It is said that "ptr points to pooh".
+"&pooh" is a constant. Or, "ptr" is a modifiable lvalue and "&pooh" is an rvalue.
+
+To declare a pointer variable, I have to declare its type based on the kind of variable to which it points to. Different variable types take up different amounts of storage, and some pointer operations require knowledge of that storage size.
+
+The "indirection operator" (*), also called the "dereferencing operator", can be used to find the value stored in pooh:
+    val = *ptr;  // finding the value ptr points to
+
+The statements "ptr = &pooh;" and "val = *ptr;" , taken together amount to:
+    val = pooh;
+
+The value of a pointer is of type, for example, "pointer to char". Its value is an address, and it's represented internally as an unsigned integer on most systems.
+It's a new type, not an integer type: ANSI C provides the %p form for pointers.
+
+Pointers enable me to get around the fact that the variables inside of a function are local to that function.
