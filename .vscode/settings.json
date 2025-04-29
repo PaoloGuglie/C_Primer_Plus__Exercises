@@ -2,6 +2,7 @@
   "files.associations": {
     "*.embeddedhtml": "html",
     "stdio.h": "c",
-    "ratio": "c"
+    "ratio": "c",
+    "random": "c"
   }
 }

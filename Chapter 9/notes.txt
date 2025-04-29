@@ -128,3 +128,13 @@ The value of a pointer is of type, for example, "pointer to char". Its value is 
 It's a new type, not an integer type: ANSI C provides the %p form for pointers.
 
 Pointers enable me to get around the fact that the variables inside of a function are local to that function.
+
+When I write a program, I can think of a variable as having two attributes: a name and a value (there are other attributes, including type...).
+After the program has been compiled and loaded the computer also thinks of the same variable as having two attributes: an address and a value. An address is the computer's version of a name. In C, I can access the address.
+
+A regular variable makes the value the primary quantity and the address a derived quantity.
+A pointer variable makes the address the primary quantity and the value a derived quantity.
+
+The function return type together with the function parameter list constitute the function signature (same as function prototype).
+
+To print type double, use %lf (long float).
