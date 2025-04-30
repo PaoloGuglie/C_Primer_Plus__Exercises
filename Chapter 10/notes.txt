@@ -52,3 +52,45 @@ Using out-of-bounds array indices may result in the program altering the value o
 
 Not checking bounds allows a C program to run faster.
 The compiler can't necessarily catch all index errors becasue the value of an index might not be determined until after the resulting program begins execution. To be safe, the compiler would have to add extra code to check the value of each index during runtime: that would slow things down.
+
+Until C99, I had to use a "constant integer expression" inside [] when declaring an array size. A constant integer expression is one formed from "integer constants". a "sizeof" expression is considered an integer constant, but a "const" value isn't.
+Also, the value of the expression must be greater than 0.
+
+As of C99, C allows creating a new breed of array, called "variable-length array" (VLA for short): I can use integer variables to declare an array.
+
+VLA's have some restrictions: for example, I can't initialize a VLA in its declaration.
+
+Multidimensional arrays:
+    float rain[5][12];
+I can say that:
+    - "rain" is a five-element array of 12-element arrays of float.
+    - "rain[0]" is an array of 12 floats.
+    - "rain[0][0]" is a float.
+Internally, this kind of array is still stored sequentially.
+
+Initializing a two-dimensional array:
+    const float rain[YEARS][MONTHS] = {...}, {...}, {...}, ...
+The same rules apply as one-dimensional arrays for each {}. Initialized elements, for each {}, are treated the same way. Too many values causes an error.
+I can omit the interior braces and just retain the two outermost braces. As long as I have the right number of entries, the effect is the same. If I am short of entries, the array is filled sequentially; then, the remaining elements are initialized to 0.
+
+Because the hardware instructions of computing machines rely heavily on addresses, pointers enable me to express myself in a way that is close to how the machine expresses itself. This correspondence makes programs with efficient.
+In particular, pointers offer an efficient way to deal with arrays. Array notation is simply a disguised use of pointers. An example of this is that an array name is also the address of the first element of the array. If arr is an array:
+    arr = &arr[0];
+Both represent the memory address of that first element. Both are constants becasue they reamin fixed for the duration of the program. However, they can be assigned as values to a pointer variable.
+
+When I say "add 1 to a pointer" C adds one "storage unit". For arrays, that means the address is increased to the address of the next element, not just the next byte. This is one of the reasons why I have to declare the sort of object to which a pointer points. The address is not enough because the computer needs to know how many bytes are used to store the object (this is true even for pointers to scalar variables, otherwise the *pt operation to fetch the value wouldn't work correctly).
+
+The value of a pointer is the address of the object to which it points.
+The address of a large object is the address of the first byte of the object (true for computers that are "byte addressable": each byte in memory is numbered sequentially).
+
+Applying the * operator to a pointer yields the value stored in the pointed-to object.
+
+Adding 1 to the pointer increases its value by the size, in bytes, of the pointed-to type.
+
+I have the following equality:
+  - dates + 2 == &dates[2]  // same address
+  - *(dates + 2) == dates[2]  // same value
+
+I can use a pointer to identify an individual element of an array and to obtain its value. We have two different notations for the same thing.
+The C language standard describes array notation in terms of pointers.
+It defines ar[n] as *(ar + n). I can think of the second expression as meaning, "Go to memory location ar, move over n units and retrieve the value there".
