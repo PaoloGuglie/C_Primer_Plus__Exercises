@@ -1,0 +1,54 @@
+Array examples:
+  - float candy[50]  // array of 50 floats
+  - char code[12]  // array of 12 chars
+  - int states[50]  // array of 50 ints
+
+The brackets [] identify these as arrays.
+
+Array initialization:
+  int powers[8] = {1, 2, 4, 6, 8, 16, 32, 64}
+
+It is a common and recommended practice to use a symbolic constant to represent the array size.
+
+Sometimes, I might want to create a read-only array. In that case, I should use the "const" keyword when I declare and initialize the array:
+  const int days[MONTHS] = {...};
+This makes the program treat each element in the array as a constant.
+
+The array members are like ordinary variables: if I don't initialize them, they might have any value. The compiler is allowed to just use whatever values were already present at those memory locations.
+
+Arrays created inside of a function without using the "static" keyword belong to the "automatic" storage class.
+
+NOTE: varaibles and arrays of some others storage classes have their contents set to 0 if they are not initialized.
+
+If I don't initialize an array at all, its elements get garbage values, but if I partially initialize an array, the remaining elements are set to 0.
+
+I can let the compiler match the array size to the given list of items by omitting the size from the initialization:
+  const int days[] = {31, 28, ...};
+The compiler counts the number of itesm in the list and makes the array that large.
+
+The "sizeof" operator gives the size, in bytes, of the object, or type, following it.
+For example:
+  sizeof days / sizeof days[0]
+can be used to get the number of elements in the array:
+"sizeof days" = size, in bytes, of the whole array.
+"sizeof days[0]" = size, in bytes, of one element.
+
+C99 added a new capability: "designated initializers". This feature allows me to pick and choose which elements are initialized.
+For example, to initialize the last element in an array, I originally had to:
+  int arr[6] = {0, 0, 0, 0, 0, 212};
+now I can:
+  int arr[6] = {[5] = 212}  // uses the index to specify the element to initialize.
+Then, as with regular partial initialization, after I initialize at least one element, the uninitialized alements are set to 0.
+
+If the code follows a designated initializer with further values, as is:
+  [4] = 31, 30
+these further values are used to initialize the subsequent elements (in this case, [5] = 30).
+If the code initializes a particular element to a value more than once, the last initialization is the one that takes effect.
+
+C doesn't let me assign one array to another as a unit. To assign values to an array, I can use a loop.
+
+I have to make sure I use array indices that are within bounds: the result of using a bad index is, in the C standard, undefined.
+Using out-of-bounds array indices may result in the program altering the value of other variables (especially if they are stored in memory locations adjacent to the array).
+
+Not checking bounds allows a C program to run faster.
+The compiler can't necessarily catch all index errors becasue the value of an index might not be determined until after the resulting program begins execution. To be safe, the compiler would have to add extra code to check the value of each index during runtime: that would slow things down.
