@@ -28,14 +28,14 @@ The compiler counts the number of itesm in the list and makes the array that lar
 
 The "sizeof" operator gives the size, in bytes, of the object, or type, following it.
 For example:
-  sizeof days / sizeof days[0]
+    sizeof days / sizeof days[0]
 can be used to get the number of elements in the array:
 "sizeof days" = size, in bytes, of the whole array.
 "sizeof days[0]" = size, in bytes, of one element.
 
 C99 added a new capability: "designated initializers". This feature allows me to pick and choose which elements are initialized.
 For example, to initialize the last element in an array, I originally had to:
-  int arr[6] = {0, 0, 0, 0, 0, 212};
+    int arr[6] = {0, 0, 0, 0, 0, 212};
 now I can:
   int arr[6] = {[5] = 212}  // uses the index to specify the element to initialize.
 Then, as with regular partial initialization, after I initialize at least one element, the uninitialized alements are set to 0.
@@ -94,3 +94,27 @@ I have the following equality:
 I can use a pointer to identify an individual element of an array and to obtain its value. We have two different notations for the same thing.
 The C language standard describes array notation in terms of pointers.
 It defines ar[n] as *(ar + n). I can think of the second expression as meaning, "Go to memory location ar, move over n units and retrieve the value there".
+
+When writing a function that operates on an array, since the name of an array is the address of its first element, the formal parameter should be a pointer. The function will get the first element of the array and the type of object at that memory location.
+This tells nothing about the number of elements in the array. I can pass the array size as a second argument (I cannot use sizeof() in the called function).
+
+In the contenx of a function prorotype or function definition header, and only in that context. I can subsitute "*ar" with "ar[]" . It is used to remind the reader that it's a pointer to an element of an array. In function prototypes I can then have:
+    int sum(int ar[], int n);  =>  int sum(int [], int);
+
+The size of a pointer variable is how much the system uses for storing addresses.
+
+I can pass two pointers, with the first indicating where the array starts and the second where the array ends, to know where to stop. Increase the value of the first pointer until it reaches the second pointer.
+In some instances, the second pointer is made to point to the location after the final element in the array:
+    arr + arrsize
+This way, I can use a test for inequality (example is in file "sum_arr2.c").
+
+C guarantees that when it allocates space for an array, a pointer to the first location after the end of the array is a valid pointer. This makes constructions such as this valid. C does not guarantee the value stored at that location. A program should not attempt to access that location.
+
+If I do:
+    total += *start++;
+The unary operators * and ++ have the same precedence, but associate from right to left. This means the ++ applies to start, not *start. That is, the pointer is incremented, not the value pointed to. The use of the postfix means that the pointer is not incremented until after the pointed-to value is added to total. A clearer notation is:
+    *(start++)
+
+If I do:
+    total += (*start)++;
+I would use the value of start and then increment the value, not the pointer. That would leave the pointer pointing to the same element, but the element would contain a new number.
