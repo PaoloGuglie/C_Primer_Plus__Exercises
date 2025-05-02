@@ -14,7 +14,8 @@ Sometimes, I might want to create a read-only array. In that case, I should use 
   const int days[MONTHS] = {...};
 This makes the program treat each element in the array as a constant.
 
-The array members are like ordinary variables: if I don't initialize them, they might have any value. The compiler is allowed to just use whatever values were already present at those memory locations.
+The array members are like ordinary variables: if I don't initialize them, they might have any value.
+The compiler is allowed to just use whatever values were already present at those memory locations.
 
 Arrays created inside of a function without using the "static" keyword belong to the "automatic" storage class.
 
@@ -23,8 +24,8 @@ NOTE: varaibles and arrays of some others storage classes have their contents se
 If I don't initialize an array at all, its elements get garbage values, but if I partially initialize an array, the remaining elements are set to 0.
 
 I can let the compiler match the array size to the given list of items by omitting the size from the initialization:
-  const int days[] = {31, 28, ...};
-The compiler counts the number of itesm in the list and makes the array that large.
+    const int days[] = {31, 28, ...};
+The compiler counts the number of items in the list and makes the array that large.
 
 The "sizeof" operator gives the size, in bytes, of the object, or type, following it.
 For example:
@@ -33,15 +34,18 @@ can be used to get the number of elements in the array:
 "sizeof days" = size, in bytes, of the whole array.
 "sizeof days[0]" = size, in bytes, of one element.
 
+If I try to get the size of a type, I need to use parentheses:
+    sizeof(int)
+
 C99 added a new capability: "designated initializers". This feature allows me to pick and choose which elements are initialized.
 For example, to initialize the last element in an array, I originally had to:
     int arr[6] = {0, 0, 0, 0, 0, 212};
 now I can:
-  int arr[6] = {[5] = 212}  // uses the index to specify the element to initialize.
-Then, as with regular partial initialization, after I initialize at least one element, the uninitialized alements are set to 0.
+    int arr[6] = {[5] = 212}  // uses the index to specify the element to initialize.
+Then, as with regular partial initializations, after I initialize at least one element, the uninitialized elements are set to 0.
 
-If the code follows a designated initializer with further values, as is:
-  [4] = 31, 30
+If the code follows a designated initializer with further values, as in:
+    [4] = 31, 30
 these further values are used to initialize the subsequent elements (in this case, [5] = 30).
 If the code initializes a particular element to a value more than once, the last initialization is the one that takes effect.
 
