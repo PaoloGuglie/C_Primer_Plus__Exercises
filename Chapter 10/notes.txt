@@ -118,3 +118,21 @@ The unary operators * and ++ have the same precedence, but associate from right 
 If I do:
     total += (*start)++;
 I would use the value of start and then increment the value, not the pointer. That would leave the pointer pointing to the same element, but the element would contain a new number.
+
+The two expressions ar[i] and *(ar + i) are equivalent in meaning. However, using an expression such as ar++ only works if ar is a pointer variable.
+
+Pointer notation, particularly when used with the increment operator, is closer to machine language and, with some compilers, leads to more efficient code.
+
+&pt1 is a pointer to pt1, which, in turn, is a pointer to item[0] (example) .
+
+When adding an integer to a pointer, the integer is multiplied by the number of  bytes in the pointed-to type and the result is added to the original address:
+    ptr1 + 4 = &item[4]
+
+I can find the difference between two pointers. Normally, I do this for two pointers to elements that are in the same array to find out how far apart the elements are. The result is in the same units as the type size. For example, in an array of ints, if the difference is 2, that means these pointers point to objects separated by two ints, not by 2 bytes.
+Subtraction is guaranteed to be a valid operation as long as both pointers point into the same array (or to a position one past the end).
+
+Do not dereference an uninitialized pointer:
+    int *pt;
+    *pt = 5;  (store the value 5 in the location to which pt points)
+There is no knowing where the 5 will be placed. It might go somewhere harmless, overwrite data or code, or cause the program to crash.
+Creating a pointer only allocates memory to store the pointer itself; it doesn't allocate memory to store data. Therefore, before I use a pointer, it should be assigned a memory location that has already been allocated.
