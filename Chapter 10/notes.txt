@@ -160,6 +160,7 @@ Using "const" in a function parameter definition not only protects the data, it 
     double * const pt = rates;  (pt points to the beginning of the array and it's not
                                  allowed to point elsewhere)
 
+<<<<<<< HEAD
     const double * const pt = rates  (pt can neither change where it's pointing nor change the value to which it points)
 
     int zippo[4][2];
@@ -175,3 +176,6 @@ given arr[x][y], *arr represents the value of its first element, zippo[0], but z
 
     arr == &arr[0] because arr is the ADDRESS of the array's first element.
     arr[0] == &arr[0][0]  (the address of the first element).
+=======
+    const double * const pt = rates  (pt can neither change where it's pointing nor change the value to which it points)
+>>>>>>> 91c6b32468b85f2b8ffaa6ea332fac98a79c82ac
