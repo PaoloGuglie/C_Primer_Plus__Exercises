@@ -155,20 +155,19 @@ The type double value to which pd points is a "const". This means that I cannot 
 A pointer-to-constant is normally used as a function parameter to indicate that the function won't use the pointer to change data.
 
 Only the address of non-constant data can be assigned to regular pointers. Otherwise, I could use the pointer to change data that was supposed to be constant.
-Using "const" in a function parameter definition not only protects the data, it also allows the functoin to work with arrays that have been declared const.
+Using "const" in a function parameter definition not only protects the data, it also allows the function to work with arrays that have been declared const.
 
     double * const pt = rates;  (pt points to the beginning of the array and it's not
                                  allowed to point elsewhere)
 
-<<<<<<< HEAD
     const double * const pt = rates  (pt can neither change where it's pointing nor change the value to which it points)
 
     int zippo[4][2];
 In this case, "zippo" is the address of an array of two ints.
 "zippo" has the same value as "&zippo[0]" . "zippo" is the address of a two-int-sized object.
 "zippo[0]" has the same value as "&zippo[0][0] . "zippo[0]" is the address of an int-sized object.
-Both "zippo" and "zippo[0]" have the same numeric value.
-"zippo + 1" has a different value from "zippo[0] + 1".
+Both "zippo" and "zippo[0]" have the same numeric value because both the integer and the array of two integers begin at the same location.
+"zippo + 1" has a different value from "zippo[0] + 1" because adding 1 to a pointer or address yields a values larger by the size of the referred-to object.
 "zippo" is the address of an address and must be dereferenced twice to get an ordinary value. It is called DOUBLE INDIRECTION.
 
 given arr[x][y], *arr represents the value of its first element, zippo[0], but zippo[0] itself is the address of an int, &zippo[0][0]. So:
@@ -176,6 +175,3 @@ given arr[x][y], *arr represents the value of its first element, zippo[0], but z
 
     arr == &arr[0] because arr is the ADDRESS of the array's first element.
     arr[0] == &arr[0][0]  (the address of the first element).
-=======
-    const double * const pt = rates  (pt can neither change where it's pointing nor change the value to which it points)
->>>>>>> 91c6b32468b85f2b8ffaa6ea332fac98a79c82ac
