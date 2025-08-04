@@ -171,7 +171,48 @@ Both "zippo" and "zippo[0]" have the same numeric value because both the integer
 "zippo" is the address of an address and must be dereferenced twice to get an ordinary value. It is called DOUBLE INDIRECTION.
 
 given arr[x][y], *arr represents the value of its first element, zippo[0], but zippo[0] itself is the address of an int, &zippo[0][0]. So:
-    *arr == &arr[0][0]   ==>   **arr == *&arr[0][0]   ==>   **arr == arr[0][0]
+    *arr == &arr[0][0]   (address of the first element)   ==>   **arr == *&arr[0][0]   ==>   **arr == arr[0][0] (the first element)
 
-    arr == &arr[0] because arr is the ADDRESS of the array's first element.
+    arr == &arr[0] because arr is the ADDRESS of the array's first element, another array.
     arr[0] == &arr[0][0]  (the address of the first element).
+    arr == &&arr[0][0]
+
+Another explanation: *zippo represents the value of its first element, zippo[0]. but zippo[0] itself is the address of an int, &zippo[0][0]. So *zippo equals *zippo[0][0]. Dereferencing again yields the value of the first item.
+
+The pointer notation equivalent of zippo[2][1] is *( *( zippo + 2 ) + 1 ) .
+Of that, *(zippo + 2) is the third element, a two-int array, hence the address of its first element, an int.
+Of that, *(zippo + 2) + 1 is the address of the second element of the two-int array, also an int.
+
+A pointer to an array of two ints:
+        int (*pt) [2]  // pt points to an array of two ints
+The parentheses are there because [] has a higher precedence than *. Therefore:
+        int * pt[2]  // pt is an array of two pointers-to-int.
+First I create pt, an array of two somethings. Then, I apply the *, making pt an array of two pointers. Finally, with the int, I make pt an array of two pointers-to-int.
+
+I can assign an int value to a double variable without using a type conversion, but I cannot do the same for pointers to these two types.
+
+        int **pt;  // this is a pointer-to-pointer-to-int
+
+Assigning a const pointer to a non-const pointer is not safe, because I could use the new pointer to alter const data.
+With just one level of indirection, I can assign a non-const pointer to a const pointer.
+The standard says the effect of altering const data using a non-const pointer is undefined.
+
+C++ allows using a const integer value to declare an array size, whilst C is more restrictive. C++ has stricter rules about pointer assignments.
+
+This declaration:
+        int sum2(int arr[][], int rows);  // faulty declaration
+The compiler converts array notation to pointer notation.
+For example, arr[1] will become arr + 1. For the compiler to evaluate this, it needs to know the size object to which arr points to.
+I can also include a size in the other bracket pair, but the compiler ignores it.
+
+In general, to declare a pointer corresponding to an N-dimensional array, I must supply values for all but the leftmost set of brackets.
+That is because the first set of brackets indicates a pointer, whereas the rest of the brackets describe the type of data object being pointed to.
+
+Variable-length arrays (VLA) allow me to use variables when dimensioning an array:
+        int quarters = 4, regions = 5;
+        double sales[regions][quarters];  // a VLA
+They have some restrictions: the need to have the automatic storage class; I cannot initialize them in a declaration. They are optional.
+To declare it:
+        int sum_2d(int rows, int cols, int ar[rows][cols]);
+I can omit names from the prototype, using *:
+        int sum_2d(int, int, int ar[*][*])
