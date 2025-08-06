@@ -216,3 +216,29 @@ To declare it:
         int sum_2d(int rows, int cols, int ar[rows][cols]);
 I can omit names from the prototype, using *:
         int sum_2d(int, int, int ar[*][*])
+
+A VLA-based function can be used with either traditional C arrays or with a varibale-length array.
+
+A VLA declaration in a function definition paramenter list doesn't acutally create an array. The VLA name is a pointer. This means a function with a VLA parameter actually works with the data in the original array, and therefore has the ability to modify the array passed as an argument.
+
+Variable-length arrays also allow for dynamic memory allocation. This means I can specify the size of the array while the program is running. Regular C arrays have static memory allocation, meaning the size of the array is determined at compile time.
+
+LITERALS are constants that aren't symbolic. For example, 5 is a type int literal.
+COMPOUND LITERALS can represent the contents of arrays and structures:
+        (int [2]) {10, 20}
+I can omit the array size:
+        (int []) {50, 20, 90}
+
+Since they are nameless, compound literals have to be used when I make them. One way is to use a pointer to keep track of the location:
+        int *pt
+        pt = (int [2]) {10, 20}
+This literal constant is identified as an array of ints. Like the name of an array, this translates to the address of the first element, so it can be assigned to a pointer-to-int.
+
+I can pass a compound literal to a function as an actual parameter.
+
+With two-dimensional arrays:
+        int (*pt) [4]  // pointer to an array of 4-int arrays
+        pt = (int [2][4]) { {1, 2, 3, -9}, {4, 5, 6, -8} }
+I still gave the pointer the length of each element of the array (4-ints length).
+
+A compound literal is a means for providing values that are needed only temporarily. It has block scope.
