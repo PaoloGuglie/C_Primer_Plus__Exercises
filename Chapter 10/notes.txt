@@ -242,3 +242,15 @@ With two-dimensional arrays:
 I still gave the pointer the length of each element of the array (4-ints length).
 
 A compound literal is a means for providing values that are needed only temporarily. It has block scope.
+
+C interprets the name of an array to be the address of the first element of the array. In other terms, the name of an array is equivalent to a pointer to the first element.
+        ar[i] == *(ar + i)
+
+C does not enable entire arrays to be passed as function arguments, but I can pass the address of an array. The function can then use this address to manipulate the original array. If the intent of the function is not to modify the original array, I should use the CONST keyword when declaring the formal parameter.
+
+Adding an integer to a pointer or incrementing a pointer changes the value of the pointer by the number of bytes of the object being pointed to.
+
+The traditional C method for passing a multidimensional array to a function is to pass the array name to a suitably typed pointer parameter. The declaration for this pointer should specify all the dimensions of the array aside from the first, passed as second argument:
+        void display(double ar[][12], int rows);
+Variable-length arrays provide a second syntax in which both array dimensions are passed as arguments:
+        void display(int rows, int cols, double ar[rows][cols]);
