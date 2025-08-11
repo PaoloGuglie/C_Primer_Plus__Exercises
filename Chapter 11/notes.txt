@@ -23,4 +23,32 @@ Then, the compiler will recognize the name "ar" as a synonym for the address of 
 
 When I do this:
     const char *pt = "Something is happening";
-Also causes 29 elements in static storage to be set aside for the string.
+Also causes 29 elements in static storage to be set aside for the string. In addition, once the program begins execution, it sets aside one more storage location for the POINTER VARIABLE pt and stores the address of the string in the pointer variable. This variable initially points to the first character of the string, but the value can be changed. I can use the increment operator.
+A string literal is considered const data; because pt points to const data, it should be declared as pointing to const data. I can change the value of pt, but I cannot use pt to change the data itself. If I copy a string literal to an array, on the other hand, I am free to change the data unless I choose to declare the array as const.
+
+Initializing an array copies a string from static storage to the array (I can change the array, not the pointer), whereas initializing the pointer merely copies the address of the string (I can change the pointer, not the array).
+
+The part of memory used for static data is different from that used for dynamic memory. Some compilers even use a different number of bits to represent the two kinds of memory.
+
+        char heart[] = "Hello!";
+        const char *head = "Bye!";
+The array name "heart" is a constant, but the pointer "head" is a variable. Only the pointer can use the incremente operator.
+
+The elements of an array are variables (unless the array was declared as const), but the name is not a variable.
+
+Don't use a pointer to a string literal if I plan to alter the string:
+        char *pt = "Klingon";
+        pt[0] = 'F';
+The behavior for such an action is undefined. A compiler can choose to represent all identical string literals with a single copy in memory. So I could be changing every instance of the word "Klingon" (every instance of the word has the same address):
+        "Klingon: beware the Klingons"  ==>  "Flingon: beward the Flingons"
+The recommended practice for initializing a pointer to a string literal is to use the const modifier:
+        const char *pt = "Klingon";
+
+        const char *arr[5] = {}
+The "arr" array is an array of 5 pointers, taking up, for example, 40 bytes. The pointers point to the locations of the string literals used for initialization, stored in static memory.
+
+        char arr[5][40] = {}
+The "arr" array is an array of 5 arrays, each of 40 char values, occupying 200 bytes. The arrays containcopies of the string literals, so each string is stored twice. Furthermore, the allocation of memory in the arrays is inefficient, for ecah element has to be the same size, large enough for the longest string.
+
+An array of pointers is more efficient than an array of character arrays, to represent strings.
+Don't use pointers to string literals if I want to alter strings or set aside space for string input.
