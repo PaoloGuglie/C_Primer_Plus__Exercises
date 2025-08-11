@@ -1,0 +1,26 @@
+The character string is one of the most useful and important data types in C.
+
+A CHARACTER STRING is a char array terminated with a null character (\0).
+
+The puts() function, like printf(), belongs to the stdio.h family of input/output functions, it only displays strings, and, unlike printf(), it automatically appends a newline to the string it displays.
+
+There are many ways to define a string. The principal ways are using string constants, using char arrays and using char pointers.
+
+A STRING LITERAL, also called a STRING CONSTANT, is anything enclosed in double quotation marks.
+
+Character string constants are placed in the STATIC STORAGE CLASS. This means that if I use a string constant in a function, the string is stored just once and lasts for the duration fo the program, even if the function is called several times. The entire quoted phrase acts as a pointer to where the string is stored.
+
+Character array != string
+
+Initializing character arrays is one case when it really does make sense to let the compiler determine the array size. That's because string-processing functions typically don't need to know the size of the array because they can simply look for the null character to mark the end.
+This works only if I initialize the array. If I create an array I intend to fill later, I need to specify the size when I declare it.
+
+When I do this:
+    const char ar[] = "Something is happening";
+The quoted string is stored in a data segment that is part of the executable file; When the program is loaded into memory, so is that segment that is part of the executable file. The quoted string is said to be in STATIC MEMORY.
+But the memory for the array is allocated only after the program begins runnig. At that time, the qouted string is copied into the array. At this time, there are two copies of the string.
+Then, the compiler will recognize the name "ar" as a synonym for the address of the first array element. In the array form, "ar" is an ADDRESS CONSTANT: I can't change it, because that would mean changing the address where the array is stored.
+
+When I do this:
+    const char *pt = "Something is happening";
+Also causes 29 elements in static storage to be set aside for the string.
