@@ -69,3 +69,66 @@ It takes a third argument indicating which file to read. To read from the keyboa
 Because the fgets() function includes the newline as part of the string, it's often paired with fputs(), which work like puts(), except that it doesn't automatically append a newline. It takes a second argument to indicate which file to write to. For the monitor, use "stdout" .
 
 The fgets() function returns a pointer to char. If all goes well, it just returns the same address that was passed to it as the first argument. If the function encounters end-of-file (or some sort of read error) it returns a special pointer called the NULL POINTER. It's a pointer guaranteed not to point to valued data so it can be used to indicate a special case. It can be represented by the digit 0 or, more commonly in C, by the macro NULL.
+
+BUFFERED I/O means the input is stored in temporary memory (the buffer) until the Return key is pressed; this adds a newline character to the input and sends the whole line on to fgets().
+If the input line exceeds the buffer size (allowed string space), the remaining characters remain in the input stream.
+On output, fputs() sends characters to another buffer, and when a newline is sent, the buffer contents are sent on to the display.
+
+THe fact that fgets() stores the newline present a problem if I don't want to store it (I can loop the string and, if I encounter a newline, change it), or an opportunity to verify whether the whole line was read.
+
+Clean input:
+                int i = 0;
+
+                // Read a whole line and replace the newline character with a null character, or read
+                // the part of a line that fits and discard the rest:
+                // ("words" is a char array to store a line; pg. 459 book)
+
+                while (words[i] != '\n' && words[i] != '\0')
+                {
+                        i++;
+                }
+
+                if (words[i] == '\n')
+                {
+                        // Delete newline character
+                        words[i] == '\0';
+                }
+
+                else  // reached null character
+                {
+                        // Read and discard the rest of the input line
+                        while (getchar() != '\n')
+                        {
+                                continue
+                        }
+                }
+
+Null character and null pointer are conceptually different:
+        - The null character, or '\0', is the character to mark the end of a C string. Its character code is zero. That isn't the code of any character, so it won't show up accidentally in some other part of the string.
+        - The null pointer, or NULL, has a value that doesn't correspond to a valid address of data. It's often used by functions that otherwise return valid addresses to indicate some special occurrence, such as EOF or failure to perform as expected.
+The null character is an integer type, while the null pointer is a pointer type. Both can be represented numerically by the value 0. But, conceptually, they are different types of 0.
+The null character, being a character, is one byte. The null pointer, being an address, typically is four bytes.
+
+gets_s(words, STLEN) :
+        - Just reads from the standard input.
+        - If it reads a newline, it discards it.
+        - If it reads the maximum number of characters and fails to read a newline, it takes several steps:
+                + it sets the first character of the destination array to the null character.
+                + it reads and discards subsequent input until a newline or end-of-file is encountered.
+                + it returns the null pointer.
+                + it invokes an implementation-dependent "handler" function which may cause the program to exit or abort.
+
+As long as the input line isn't too long, gets_s() behaves like gets().
+gets_s() disposes of the rest of the input line whether I want to or not. Less flexible than fgets().
+
+Given that gets_s() is optional, using fgets() is the better choice.
+
+If the remainder of a line is left in place, it becomes the input for the next read statement. This can cause the program to crash if the next read statement is looking for a type double value.
+
+If I specify a field width, scanf() collects up to n characters or up to the first whitespace character, whichever comes first.
+
+The scanf() function returns an integer value that equals the number of items successfully read or returns EOF if it encounters the end of file.
+
+The typical use for scanf() is reading and converting a mixture of data types in some standard form. Or to precess input a word at a time.
+
+The scanf() function has the same potential defect as gets(): it can create an overflow if the input word doesn't fit the destination. But I can use the field-width option in the %s specifier to prevent overflow.
