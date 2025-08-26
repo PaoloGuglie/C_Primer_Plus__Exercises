@@ -52,6 +52,9 @@ The "arr" array is an array of 5 arrays, each of 40 char values, occupying 200 b
 
 An array of pointers is more efficient than an array of character arrays, to represent strings.
 Don't use pointers to string literals if I want to alter strings or set aside space for string input.
+_____________________
+
+        gets()  fgets()   gets_s()  scanf()
 
 The gets() function reads an entire line up through the newline character, discards the newline character, stores the remaining characters, adding a null character to create a C string. It's often paired with puts(), which displays a string, adding a newline.
 PROBLEM: gets() doesn't check to see if the input line actually fits into the array. If the input string is too long, I get BUFFER OVERFLOW, meaning the excess characters overflow the designated target. The extra characters might just go into unused memory and cause no immediate problems, or they may overwrite other data in my program, ...
@@ -132,3 +135,70 @@ The scanf() function returns an integer value that equals the number of items su
 The typical use for scanf() is reading and converting a mixture of data types in some standard form. Or to precess input a word at a time.
 
 The scanf() function has the same potential defect as gets(): it can create an overflow if the input word doesn't fit the destination. But I can use the field-width option in the %s specifier to prevent overflow.
+________________________
+
+        puts()  fputs()  printf()
+
+The puts() function needs the address of a string for an argument. It stops when it encounters the null character.
+
+There are usually lost of nulls in memory, so if my argument has not a null character, sooner or later one will be found in memory.
+
+The fputs() functoin si the file-oriented version of puts(). Differences:
+        - fputs() takes a second argument indicating the fiel to which to write. I can use "stdout", which is defined in stdio.h .
+        - fputs() does not automatically append a newline to the output.
+
+( gets() discards a newline on input, puts() adds a newline on output )
+( fgets() stores the newline on input, and fputs() doesn't add a newline on output )
+
+printf() does not automatically print each string on a new line.
+
+Doing printf("%s\n", string) takes longer for the computer to execute than puts(string) .
+____________________________
+
+A function like puts() that doesn't automatically add a newline:
+
+        void my_put(const char *string)
+        {
+                while (*string != '\0')
+                {
+                        putchar(*string++);
+                }
+        }
+
+Because this function doesn't change the string, I use the const modifier.
+
+The HIGHER PRECEDENCE of ++ compared to * means that putchar(*string++) prints the value pointed to by "string" but increments "string" itself, not the character to which it points.
+
+Because each string has a null character marking its end, I don't have to pass a size to the function.
+
+Many C programmers would use the form   while (*string)   for the while loop.
+________________________
+
+ANSI C uses the string.h header file to provide the prototypes for string-handling functions.
+Some are: strlen(), strcat(), strncat(), strcmp(), strncmp(), strcpy() and strncpy() .
+
+The stdio.h header file has sprintf() .
+
+The strlen() function finds the length of a string.
+
+A function that shortens lengthy strings:
+        void fit(char *string, unsigned int size)
+        {
+                if (strlen(string) > size)
+                {
+                        string[size] = '\0';
+                }
+        }
+
+The strcat() (STRING CONCATENATION) function takes tow string for arguments. A copy of the second string is taked onto the end of the first, and this combined version becomes the new first string. The second string is not altered.
+The strcat() function is type char * (pointer-to-char) and returns the value of its first argument - the address of the first character of the string.
+This function does not check if the second string will fit in the first array. If I fail to allocate enough space for the first array, I will run into problems as excess characters overflow into adjacent memory locations.
+
+strncat() takes a second argument indicating the maximum number of characters to add.
+Example:
+        strncat(bugs, addon, 13)  ==>  It will stop when it reaches 13 characters or the null character.
+        The "bugs" array should be large enough to hold the original string (not counting the null character), a max of 13 additional characters, and the terminal null character (which is appended) .
+
+The null character is not counted when using strlen().
+
+strcat(), like gets(), can lead to buffer overflows.
