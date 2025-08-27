@@ -202,3 +202,61 @@ Example:
 The null character is not counted when using strlen().
 
 strcat(), like gets(), can lead to buffer overflows.
+
+The strcmp() (for STRING COMPARISON) function compares two strings. It does for strings what relational operators do for numbers. It returns 0 if its two string arguments are the same and nonzero otherwise.
+It compares strings, not arrays; therefore, strcmp() can be used to compare strings stored in arrays of different sizes.
+
+If the strings are not the same, the ANSI C standard says that strcmp() returns a negative number if the first string comes before the second alphabetically, returns 0 if they are the same and returns a positive number if the first string follows the second alphabetically. The exact numerical values are left open to the implementation (one implementation can return the difference between the character codes).
+If the first characters are identical, strcmp() moves along until it finds the first pair of disagreeing characters. It then returns the corresponding code.
+
+The null character is the very first character in the ASCII sequence.
+
+strcmp() goes by the machine COLLATING SEQUENCE: characters are compared according to their numeric representation, typically the ASCII values. In ASCII, the codes for uppercase letters precede those for lowercase letters.
+
+If I'm trying to sort the string alphabetically, I want to know if the comparison is positive, negative or 0.
+
+The strcmp() function is for comparing strings, not characters:
+        strcmp("apples", "A") allowed
+        strcmp("apples", 'A') NOT allowed
+Since the char type is an integer type, I can use the relational operators for character comparisons.
+
+
+The strncmp() function compares the strings until they differ or unitl it has compared a number of characters specified by a third argument.
+
+To copy a string, I can use the strcpy() function. Its the string equivalent of the assignment operator.
+For example:
+        strcpy(arr1, arr2);
+The string pointed to by arr2 is copied into the array pointed to by arr1. The copy is called the TARGET, and the original string is called the SOURCE. The order of the arguments is the same as the order in an assignment statement.
+
+To compare if the first character in an array is 'q':
+        if (arr[0] != 'q')   or   if (strncmp(arr, "q", 1) != 0)
+
+It is my responsibility to make use the destination array has enough room to copy the source.
+
+strcpy() takes two string pointers as arguments.
+The second pointer, which points to the original string, can be a declared pointer, an array name, or a string constant.
+The first pointer, which points to the copy, should point to a data object, such as an array, roomy enough to hold the string.
+
+Declaring an array allocates storage space for data.
+Declaring a pointer only allocates storage space for one address.
+
+The strcpy() function is type char *. It returns the value of the first argument - the address of a character.
+The first argument need not point to the beginning of an array; this lets me copy just part of an array.
+
+strcpy() copies the null character from the source string; it can overwrite part of a string.
+
+Both strcpy() and strcat() have a problem: neither checks to see whether the source string actually fits in the target string.
+
+strncpy() takes a third argument, which is the maximum number of characters to copy.
+
+strncpy(target, source, n) copies up to n characters or up through the null character (whichever comes first) from source to target.
+If the number of characters in source is less than n, even the null character is copied.
+The function never copies more than n characters, so if it reaches the limit before reaching the end of the source string, no null character is added.
+The final product may or may not have a null character. So I can do:
+        strncpy(target, source, target_size - 1);
+        target[target_size - 1] = '\0';
+This ensures that I've stored a string.
+
+The sprintf() function works like printf(), but it writes to a string instead of writing to a display.
+The first argument is the address of the target string.
+The remaining arguments are the same as for printf() - a conversion specification string followed by a list of items to be written.
