@@ -1,7 +1,0 @@
-The compiler can usually tell the type of a constant by the way it looks. A variable, however, needs to have its type announced in a declaration statement.
-
-For some arithmetic operations, such as subtracting one large number from another, floating-point numbers are subject to greater loss of precision.
-
-C has a built-in operator called sizeof that gives sizes in bytes. The type specifier for the type used is %zd.
-
-The smallest integer type is char.
