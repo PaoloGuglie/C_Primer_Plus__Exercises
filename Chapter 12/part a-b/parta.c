@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include "partb.c"
-
-void report_count();
-void accumulate(int);
+#include "partb.h"
 
 int count;  // file scope, external linkage (automatically set to 0)
 
