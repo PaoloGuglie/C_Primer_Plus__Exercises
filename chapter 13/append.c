@@ -39,6 +39,9 @@ int main(void)
     // Do the magic
     append(f1, f2);
 
+    // Close the source file
+    fclose(f1);
+
     // Show the new destination file
     char ch;
 
@@ -47,6 +50,9 @@ int main(void)
     rewind(f2);
 
     while ((ch = getc(f2)) != EOF) putc(ch, stdout);
+
+    // Close the destination file
+    fclose(f2);
 
     return 0;
 }
