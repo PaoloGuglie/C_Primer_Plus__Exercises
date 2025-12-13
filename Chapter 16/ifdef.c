@@ -1,0 +1,26 @@
+/*
+    Use preprocessor's instructions to create conditional code
+*/
+
+#include <stdio.h>
+
+#define JUST_CHECKING
+#define LIMIT 4
+
+int main(void)
+{
+    int total = 0;
+
+    for (int i = 0; i <= LIMIT; i++)
+    {
+        total += 2 * i * i + 1;
+
+        #ifdef JUST_CHECKING
+            printf("i = %d, running total = %d\n", i, total);
+        #endif
+    }
+
+    printf("Grand total: %d.\n", total);
+
+    return 0;
+}
